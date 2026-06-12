@@ -1,0 +1,57 @@
+[data-bs-theme="dark"] .navbar {
+    --bs-navbar-color: rgba(255, 255, 255, 0.85);
+}
+
+[data-bs-theme="dark"] .card {
+    --bs-card-bg: #1e1e1e;
+    --bs-card-border-color: #333;
+}
+
+[data-bs-theme="dark"] .table {
+    --bs-table-bg: #1e1e1e;
+    --bs-table-color: #ddd;
+}
+
+[data-bs-theme="dark"] body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+[data-bs-theme="dark"] .footer {
+    background-color: #1a1a1a !important;
+    border-top-color: #333 !important;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: box-shadow 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.btn-group-sm .btn {
+    padding: 0.25rem 0.5rem;
+}
+
+.progress {
+    border-radius: 15px;
+}
+
+.progress-bar {
+    border-radius: 15px;
+    font-weight: 600;
+}
+
+.alert {
+    border-radius: 8px;
+}
+
+.min-vh-100 {
+    min-height: 100vh;
+}

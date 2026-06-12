@@ -1,0 +1,9 @@
+vendor/
+.env
+storage/logs/*
+storage/cache/*
+public/uploads/*
+!public/uploads/.gitkeep
+!.gitignore
+.phpunit.result.cache
+.phpstan-cache
