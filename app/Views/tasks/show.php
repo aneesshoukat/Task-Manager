@@ -50,5 +50,7 @@
         <?php endif; ?>
     </div>
 </div>
+
+<?php require __DIR__ . '/partials/comments.php'; ?>
 <?php $content = ob_get_clean(); ?>
 <?php require __DIR__ . '/../layouts/main.php'; ?>

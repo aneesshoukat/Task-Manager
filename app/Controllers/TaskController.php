@@ -8,6 +8,7 @@ use App\Core\Controller;
 use App\Core\Request;
 use App\Core\Response;
 use App\Core\Session;
+use App\Services\CommentService;
 use App\Services\CsrfService;
 use App\Services\TaskService;
 use App\Services\ValidationService;
@@ -17,12 +18,14 @@ class TaskController extends Controller
     private TaskService $taskService;
     private ValidationService $validationService;
     private CsrfService $csrfService;
+    private CommentService $commentService;
 
     public function __construct()
     {
         $this->taskService = new TaskService();
         $this->validationService = new ValidationService();
         $this->csrfService = new CsrfService();
+        $this->commentService = new CommentService();
     }
 
     public function index(Request $request): void
@@ -61,7 +64,14 @@ class TaskController extends Controller
             return;
         }
 
-        $this->render('tasks/show', ['task' => $task]);
+        $comments = $this->commentService->getTaskComments((int) $params['id'], $userId);
+
+        $this->render('tasks/show', [
+            'task' => $task,
+            'comments' => $comments,
+            'userId' => $userId,
+            'taskId' => (int) $params['id'],
+        ]);
     }
 
     public function create(Request $request): void

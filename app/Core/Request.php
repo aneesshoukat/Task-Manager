@@ -44,7 +44,13 @@ class Request
 
     public function getMethod(): string
     {
-        return strtoupper($this->server['REQUEST_METHOD'] ?? 'GET');
+        $method = strtoupper($this->server['REQUEST_METHOD'] ?? 'GET');
+
+        if ($method === 'POST' && !empty($this->body['_method'])) {
+            $method = strtoupper($this->body['_method']);
+        }
+
+        return $method;
     }
 
     public function getUri(): string

@@ -73,4 +73,24 @@ for ($i = 0; $i < 10; $i++) {
 }
 
 echo "Created 10 sample tasks.\n";
+
+$sampleComments = [
+    'This task is coming along nicely.',
+    'I will start working on this today.',
+    'Added some notes to the documentation.',
+];
+
+$taskIds = $db->fetchAll("SELECT id FROM tasks WHERE user_id = ?", [$userId]);
+foreach ($taskIds as $index => $t) {
+    if ($index >= 3) break;
+    $db->insert('task_comments', [
+        'task_id' => $t['id'],
+        'user_id' => $userId,
+        'comment' => $sampleComments[$index],
+        'created_at' => $now,
+        'updated_at' => $now,
+    ]);
+}
+
+echo "Created 3 sample comments.\n";
 echo "Seeding complete.\n";

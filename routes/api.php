@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 use App\Controllers\Api\AuthApiController;
-use App\Controllers\Api\TaskApiController;
-use App\Controllers\Api\ProfileApiController;
+use App\Controllers\Api\CommentApiController;
 use App\Controllers\Api\DashboardApiController;
+use App\Controllers\Api\ProfileApiController;
+use App\Controllers\Api\TaskApiController;
 use App\Middleware\JwtMiddleware;
 
 $router->post('/api/v1/auth/register', [AuthApiController::class, 'register']);
@@ -22,5 +23,10 @@ $router->post('/api/v1/tasks', [TaskApiController::class, 'store'], [JwtMiddlewa
 $router->put('/api/v1/tasks/{id}', [TaskApiController::class, 'update'], [JwtMiddleware::class]);
 $router->patch('/api/v1/tasks/{id}/complete', [TaskApiController::class, 'complete'], [JwtMiddleware::class]);
 $router->delete('/api/v1/tasks/{id}', [TaskApiController::class, 'destroy'], [JwtMiddleware::class]);
+
+$router->get('/api/v1/tasks/{id}/comments', [CommentApiController::class, 'index'], [JwtMiddleware::class]);
+$router->post('/api/v1/tasks/{id}/comments', [CommentApiController::class, 'store'], [JwtMiddleware::class]);
+$router->put('/api/v1/tasks/{id}/comments/{cid}', [CommentApiController::class, 'update'], [JwtMiddleware::class]);
+$router->delete('/api/v1/tasks/{id}/comments/{cid}', [CommentApiController::class, 'destroy'], [JwtMiddleware::class]);
 
 $router->get('/api/v1/dashboard/stats', [DashboardApiController::class, 'stats'], [JwtMiddleware::class]);

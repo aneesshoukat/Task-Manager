@@ -51,6 +51,12 @@ class ProfileController extends Controller
         Response::redirect('/profile');
     }
 
+    public function showChangePassword(Request $request): void
+    {
+        $this->csrfService->generate();
+        $this->render('profile/change-password');
+    }
+
     public function changePassword(Request $request): void
     {
         $data = $request->only(['current_password', 'new_password', 'new_password_confirmation']);

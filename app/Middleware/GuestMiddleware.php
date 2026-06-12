@@ -6,6 +6,7 @@ namespace App\Middleware;
 
 use App\Core\Request;
 use App\Core\Response;
+use App\Models\User;
 use App\Services\JwtService;
 
 class GuestMiddleware
@@ -19,8 +20,11 @@ class GuestMiddleware
             $decoded = $jwtService->verifyToken($token);
 
             if ($decoded && ($decoded->type ?? '') === 'access') {
-                Response::redirect('/dashboard');
-                return;
+                $user = User::find((int) $decoded->sub);
+                if ($user) {
+                    Response::redirect('/dashboard');
+                    return;
+                }
             }
         }
 

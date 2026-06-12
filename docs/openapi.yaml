@@ -78,6 +78,26 @@ components:
                 type: string
               due_date:
                 type: string
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        task_id:
+          type: integer
+        user_id:
+          type: integer
+        user_name:
+          type: string
+        user_avatar:
+          type: string
+          nullable: true
+        comment:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
     Error:
       type: object
       properties:
@@ -307,6 +327,104 @@ paths:
       responses:
         "200":
           description: Task completed
+        "404":
+          description: Not found
+
+  /tasks/{id}/comments:
+    get:
+      tags: [Tasks]
+      summary: List task comments
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Comment list
+        "404":
+          description: Task not found
+    post:
+      tags: [Tasks]
+      summary: Add a comment to a task
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [comment]
+              properties:
+                comment:
+                  type: string
+      responses:
+        "201":
+          description: Comment created
+        "422":
+          description: Validation failed
+
+  /tasks/{id}/comments/{cid}:
+    put:
+      tags: [Tasks]
+      summary: Update a comment
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [comment]
+              properties:
+                comment:
+                  type: string
+      responses:
+        "200":
+          description: Comment updated
+        "404":
+          description: Not found
+    delete:
+      tags: [Tasks]
+      summary: Delete a comment
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Comment deleted
         "404":
           description: Not found
 

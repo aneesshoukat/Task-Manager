@@ -5,7 +5,7 @@ A feature-complete task management web application built with **native PHP 8.5**
 ## What It Does
 
 - **User authentication** — Register, login, logout using JWT access + refresh tokens stored in HttpOnly cookies
-- **Task management** — Create, edit, delete, view, mark complete, restore from trash
+- **Task management** — Create, edit, delete, view, mark complete, restore from trash, add comments
 - **Search & filter** — Filter by status, priority, date range; search by title; sort by date or priority; paginated results
 - **Dashboard** — See total, completed, pending, and overdue task counts with completion percentage
 - **Profile** — Edit name/email, change password, upload avatar image
@@ -31,17 +31,17 @@ A feature-complete task management web application built with **native PHP 8.5**
 ```
 task-manager/
 ├── app/
-│   ├── Controllers/        # Web (Auth, Task, Dashboard, Profile)
-│   │   └── Api/            # API controllers + JSON Resource classes
+│   ├── Controllers/        # Web (Auth, Task, Dashboard, Profile, Comment)
+│   │   └── Api/            # API controllers + JSON Resource classes (incl. Comment)
 │   ├── Core/               # Router, Database, Controller, Model, Request, Response, Session, Validator, Logger
 │   ├── Helpers/            # Global helper functions (escape, old, csrf, asset, url, config)
 │   ├── Middleware/         # Auth, Guest, CSRF, RateLimit, Jwt (API)
-│   ├── Models/             # User, Task, RefreshToken, LoginAttempt, ActivityLog
-│   ├── Services/           # JwtService, AuthService, TaskService, ValidationService, CsrfService
+│   ├── Models/             # User, Task, TaskComment, RefreshToken, LoginAttempt, ActivityLog
+│   ├── Services/           # JwtService, AuthService, TaskService, CommentService, ValidationService, CsrfService
 │   └── Views/              # Bootstrap 5 templates (layouts, partials, auth, tasks, dashboard, profile, errors)
 ├── config/                 # app.php, database.php, jwt.php
 ├── database/
-│   ├── migrations/         # 5 table migration files
+│   ├── migrations/         # 6 table migration files
 │   └── seeders/            # DatabaseSeeder.php (sample user + 10 tasks)
 ├── docs/                   # openapi.yaml
 ├── public/                 # Web root (index.php, css/, js/, uploads/, docs/)
@@ -83,7 +83,7 @@ copy .env.example .env        # Windows
 # 3. Create the database
 mysql -u root -p -e "CREATE DATABASE taskmanager"
 
-# 4. Run migrations (creates all 5 tables)
+# 4. Run migrations (creates all 6 tables)
 php database/migrate.php
 
 # 5. Seed sample data (optional)
@@ -142,6 +142,10 @@ All API routes are prefixed with `/api/v1` and use Bearer token authentication.
 | PUT | /api/v1/tasks/{id} | Yes | Update task |
 | DELETE | /api/v1/tasks/{id} | Yes | Delete task |
 | PATCH | /api/v1/tasks/{id}/complete | Yes | Mark task complete |
+| GET | /api/v1/tasks/{id}/comments | Yes | List task comments |
+| POST | /api/v1/tasks/{id}/comments | Yes | Add comment |
+| PUT | /api/v1/tasks/{id}/comments/{cid} | Yes | Update comment |
+| DELETE | /api/v1/tasks/{id}/comments/{cid} | Yes | Delete comment |
 | GET | /api/v1/profile | Yes | Get profile |
 | PUT | /api/v1/profile | Yes | Update profile |
 | GET | /api/v1/dashboard/stats | Yes | Dashboard statistics |
