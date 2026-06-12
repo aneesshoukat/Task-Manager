@@ -11,13 +11,11 @@ class AuthService
 {
     private Database $db;
     private JwtService $jwtService;
-    private CsrfService $csrfService;
 
     public function __construct()
     {
         $this->db = Database::getInstance();
         $this->jwtService = new JwtService();
-        $this->csrfService = new CsrfService();
     }
 
     public function register(array $data): array

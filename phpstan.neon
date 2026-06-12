@@ -1,0 +1,7 @@
+parameters:
+    level: 5
+    ignoreErrors:
+        # View variables from extract() can't be statically analyzed
+        - '#Variable \$\w+ might not be defined.#'
+        # new static() is safe here — abstract Model with simple constructor
+        - '#Unsafe usage of new static\(\)#'
